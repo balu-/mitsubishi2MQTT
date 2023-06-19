@@ -53,6 +53,9 @@ ESP8266WebServer server(80);  // ESP8266 web
   #include INCLUDE_FILE(MY_LANGUAGE)
 #endif
 
+#define PIN_RX 16 //-1
+#define PIN_TX 17 //-1
+
 // wifi, mqtt and heatpump client instances
 WiFiClient espClient;
 PubSubClient mqtt_client(espClient);
@@ -185,7 +188,7 @@ void setup() {
     // Allow Remote/Panel
     hp.enableExternalUpdate();
     hp.enableAutoUpdate();
-    hp.connect(&Serial);
+    hp.connect(&Serial,PIN_RX,PIN_TX);
     heatpumpStatus currentStatus = hp.getStatus();
     heatpumpSettings currentSettings = hp.getSettings();
     rootInfo["roomTemperature"]     = convertCelsiusToLocalUnit(currentStatus.roomTemperature, useFahrenheit);
